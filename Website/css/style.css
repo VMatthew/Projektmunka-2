@@ -3,7 +3,13 @@ html{
 }
 body{
     background-color: beige;
+    padding: 10%;
+}
+h1{
+    text-align: center;
 }
 p{
-    color: rgba(0,0,0, 0.7 )
+    color: rgba(0,0,0, 0.7 );
+    text-align:justify;
+    line-height: 1.5;
 }
