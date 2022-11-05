@@ -1,0 +1,12 @@
+html{
+    font-family: sans-serif;
+    font-size: 20px;
+}
+body{
+    background-color: beige;
+    line-height: 1.5;
+
+}
+p{
+    color: rgba(0,0,0, 0.7 )
+}
