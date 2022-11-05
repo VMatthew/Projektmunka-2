@@ -1,47 +1,12 @@
-
 html{
     font-family: sans-serif;
+    font-size: 20px;
 }
 body{
-    background-color: snow;
-    padding: 10%;
-    margin: 0 auto auto;
-    max-width: 1100px;
-    
-}
-h1{
-    text-align: center;
-    border: 0px;
-    border-radius: 2rem;
-    background-color: lightblue;
-}
-h2{
-    text-align:center;
-    border: 0px;
-    border-radius: 2rem;
-    background-color: paleturquoise; 
-}
-p{
-    color: rgba(0,0,0, 0.7 );
-    text-align:center;
+    background-color: beige;
     line-height: 1.5;
 
-
-    border:0px;
-    border-radius: 1rem;
-    background-color: lightskyblue;
-    overflow: hidden;
-
 }
-a{
-    color: steelblue;
+p{
+    color: rgba(0,0,0, 0.7 )
 }
-a:visited{
-    color:blueviolet;
-}
-a:hover, a:focus{
-    color: dodgerblue;      
-}   
-a:active{
-    color:aquamarine;
-}    
