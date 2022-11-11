@@ -3,6 +3,11 @@
 #define DHTPIN 2
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
+int sensorval;
+int moisture;
+
+const int szaraz = 810;
+const int nedves = 345;
 
 void setup() {
   Serial.begin(9600);
@@ -20,6 +25,11 @@ void loop() {
   Serial.println(humidity);
   Serial.print("temp: ");
   Serial.println(temperature);
+  sensorval = analogRead(A0);
+  moisture = map(sensorval, nedves, szaraz, 100, 0);
+  Serial.print(moisture);
+  Serial.println("%");
   
-  delay(60000);
+  delay(10000);
 }
+
