@@ -16,10 +16,13 @@ void setup() {
   Serial.begin(9600);
   dht.begin();
   delay(1000);
+  
   Serial.println("Program started");
 }
 
 void loop() {
+  StaticJsonBuffer<1000> jsonBuffer;
+  JsonObject& data = jsonBuffer.createObject();
   
   float humidity = dht.readHumidity();
   float temperature = dht.readTemperature(false);
@@ -38,6 +41,13 @@ void loop() {
   Serial.print("lum: ");
   Serial.print(luminosity);
   Serial.println("%");
+  
+  data["humidity"] = humidity;
+  data["temperature"] = temperature;
+  data["moisture"] = moisture;
+  data["luminosity"] = luminosity;
+
+  jsonBuffer.clear();
   
   delay(10000);
 }
