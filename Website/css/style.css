@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 img{ display: block;}
-
+/*reset*/
 
 html {
   font-family: sans-serif;
@@ -16,21 +16,25 @@ html {
     position: absolute;
     left:-100000px
 }
+
+
+
+
+
 body {
   background-color: snow;
-  padding: 10%;
+  box-shadow: 0 0 10px black;
   margin: 0 auto auto;
   max-width: 1600px;
+  padding: 50px;
+  min-width: 900px;
+  min-height: 1000px;
+  
 }
 header{
-    padding: 20px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 30px;
+    
+
     border-radius: 1rem;
-
-
     background-color:lightcyan;
     background-image:url(../image/WallpaperDog-5486501.png);
     background-repeat: no-repeat;
@@ -38,6 +42,44 @@ header{
     background-size: cover;
 
 }
+main{
+border-radius: 1rem;
+background-color: lavender; 
+margin: 2rem;
+}
+footer{
+    text-align: center;
+    border-radius: 1rem;
+    background-color:whitesmoke;
+    margin: 1rem;
+}
+.hero{
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 30px;
+  border-radius: 1rem;
+  margin: 1rem;
+}
+nav{
+  background-color:dodgerblue;
+  border-radius: 1rem;
+  font-size: 150%;
+}
+ul{
+  display: flex;
+  list-style-type: none;
+  justify-content: space-evenly;
+  gap: 1rem;
+  margin: 1rem; 
+}
+li{
+  border-radius: 1rem;
+  background-color: rgb(196, 226, 250);
+}
+
+
 .board-anatomy{ 
     width: 100%;
 }
@@ -86,4 +128,13 @@ a:focus {
 }
 a:active {
   color: aquamarine;
+}
+
+table{
+  margin: auto auto auto  auto;
+    position:relative;
+    border-radius: 1rem;
+    background-color: aliceblue;
+    text-align: center;
+    width: 500px;
 }
