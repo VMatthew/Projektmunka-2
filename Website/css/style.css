@@ -1,47 +1,89 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+img{ display: block;}
 
-html{
-    font-family: sans-serif;
+
+html {
+  font-family: sans-serif;
 }
-body{
-    background-color: snow;
-    padding: 10%;
-    margin: 0 auto auto;
-    max-width: 1100px;
-    
+.nowrap{
+    white-space: nowrap;
 }
-h1{
+.offscreen{
+    position: absolute;
+    left:-100000px
+}
+body {
+  background-color: snow;
+  padding: 10%;
+  margin: 0 auto auto;
+  max-width: 1600px;
+}
+header{
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+    border-radius: 1rem;
+
+
+    background-color:lightcyan;
+    background-image:url(../image/WallpaperDog-5486501.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+}
+.board-anatomy{ 
+    width: 100%;
+}
+.board-anatomy img{
+    width:100%;
+    height: auto;
+    min-width: 100px;
+    border: 5px double lightblue;
+    border-radius: 1rem;
+}
+.h1{
+    font-size: 250%;
     text-align: center;
     border: 0px;
-    border-radius: 2rem;
-    background-color: lightblue;
-}
-h2{
-    text-align:center;
-    border: 0px;
-    border-radius: 2rem;
-    background-color: paleturquoise; 
-}
-p{
-    color: rgba(0,0,0, 0.7 );
-    text-align:center;
-    line-height: 1.5;
-
-
-    border:0px;
     border-radius: 1rem;
-    background-color: lightskyblue;
-    overflow: hidden;
+    background-color: lightblue;
+    margin: 2rem;
+}
+h2 {
+  text-align: center;
+  border: 0px;
+  border-radius: 1rem;
+  background-color: paleturquoise;
+  margin: 1rem;
+}
+p {
+  color: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  line-height: 1.5;
 
+  border: 0px;
+  border-radius: 1rem;
+  background-color: lightskyblue;
+  overflow: hidden;
+  margin: 1rem;
 }
-a{
-    color: steelblue;
+a {
+  color: steelblue;
 }
-a:visited{
-    color:blueviolet;
+a:visited {
+  color: blueviolet;
 }
-a:hover, a:focus{
-    color: dodgerblue;      
-}   
-a:active{
-    color:aquamarine;
-}    
+a:hover,
+a:focus {
+  color: dodgerblue;
+}
+a:active {
+  color: aquamarine;
+}
