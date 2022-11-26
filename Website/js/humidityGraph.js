@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $.ajax({
-        url : "https://projekt2sze.000webhostapp.com/php/data/humidity.php",
+        url : "https://projektmunka2sze.000webhostapp.com/php/data/humidity.php",
         type : "GET",
         success : function(data){
             console.log(data);
@@ -8,9 +8,9 @@ $(document).ready(function(){
             var id = [];
             var humidity = [];
 
-            for(var hum in data) {
-                id.push(data[temp].TIME);
-                humidity.push(data[hum].HUM);
+            for(var i in data) {
+                id.push(data[i].TIME);
+                humidity.push(data[i].HUM);
             }
 
             var chartdata = {

@@ -13,15 +13,6 @@
   </head>
 
   <body>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/Chart.min.js"></script>
-    <script type="text/javascript" src="js/moistureGraph.js"></script>
-    <script type="text/javascript" src="js/temperatureGraph.js"></script>
-    <script type="text/javascript" src="js/humidityGraph.js"></script>
-    <script type="text/javascript" src="js/colorGraph.js"></script>
-    <script type="text/javascript" src="js/lightGraph.js"></script>
-
-
     <header>
     <section class="hero">
       <section class="board">
@@ -36,7 +27,7 @@
       </section>
       <h1 class="h1">
         <span class="nowrap">Arduino öntöző </span>
-        <span class="nowrap">rendszer weaboldala</span>
+        <span class="nowrap">rendszer weboldala</span>
       </h1>
     </section>  
       <nav class="nav">
@@ -51,15 +42,19 @@
       </nav>
     </header>
     <main>
-      <p>
-        <div class="charts">
-        <canvas id="colChart"></canvas>
+        <h2>A kezdőoldal az utolsó 10 mért adatot tartalmazza vizualizálva gráfokkal</h2>
+        <div class="charts-container">
         <canvas id="humChart"></canvas>
         <canvas id="lightChart"></canvas>
         <canvas id="moistChart"></canvas>
         <canvas id="tempChart"></canvas>
       </div>
-      </p>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/Chart.min.js"></script>
+        <script type="text/javascript" src="js/moistureGraph.js"></script>
+        <script type="text/javascript" src="js/temperatureGraph.js"></script>
+        <script type="text/javascript" src="js/humidityGraph.js"></script>
+        <script type="text/javascript" src="js/lightGraph.js"></script>
     </main>
     <footer>
      

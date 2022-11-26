@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $.ajax({
-        url : "https://projekt2sze.000webhostapp.com/php/data/light.php",
+        url : "https://projektmunka2sze.000webhostapp.com/php/data/light.php",
         type : "GET",
         success : function(data){
             console.log(data);
@@ -8,9 +8,9 @@ $(document).ready(function(){
             var id = [];
             var light = [];
 
-            for(var light in data) {
-                id.push(data[light].TIME);
-                light.push(data[light].LIGHT);
+            for(var i in data) {
+                id.push(data[i].TIME);
+                light.push(data[i].LIGHT);
             }
 
             var chartdata = {

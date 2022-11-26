@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $.ajax({
-        url : "https://projekt2sze.000webhostapp.com/php/data/moisture.php",
+        url : "https://projektmunka2sze.000webhostapp.com/php/data/moisture.php",
         type : "GET",
         success : function(data){
             console.log(data);
@@ -8,9 +8,9 @@ $(document).ready(function(){
             var id = [];
             var soilMoisture = [];
 
-            for(var moisture in data) {
-                id.push(data[moisture].TIME);
-                soilMoisture.push(data[moisture].MOIST);
+            for(var i in data) {
+                id.push(data[i].TIME);
+                soilMoisture.push(data[i].MOIST);
             }
 
             var chartdata = {

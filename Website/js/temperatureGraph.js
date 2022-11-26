@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $.ajax({
-        url : "https://projekt2sze.000webhostapp.com/php/data/temperature.php",
+        url : "https://projektmunka2sze.000webhostapp.com/php/data/temperature.php",
         type : "GET",
         success : function(data){
             console.log(data);
@@ -8,9 +8,9 @@ $(document).ready(function(){
             var id = [];
             var temperature = [];
 
-            for(var temp in data) {
-                id.push(data[temp].TIME);
-                temperature.push(data[temp].TEMP);
+            for(var i in data) {
+                id.push(data[i].TIME);
+                temperature.push(data[i].TEMP);
             }
 
             var chartdata = {

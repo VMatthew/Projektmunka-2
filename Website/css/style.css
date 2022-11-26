@@ -20,7 +20,6 @@ html {
 
 
 
-
 body {
   background-color: snow;
   box-shadow: 0 0 10px black;
@@ -145,4 +144,8 @@ table{
     background-color: aliceblue;
     text-align: center;
     width: 500px;
+}
+.charts-container{
+  width: 800px;
+  height:auto;
 }
