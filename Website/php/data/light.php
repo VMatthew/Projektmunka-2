@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'id19883322_adatok');
 define('DB_USERNAME', 'id19883322_admin');
-define('DB_PASSWORD', '*}Nv)[y6)G5dt[3Ij');
+define('DB_PASSWORD', 'ÁAdmin234567');
 
 $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
@@ -13,7 +13,7 @@ if(!$mysqli){
   die("Connection failed: " . $mysqli->error);
 }
 
-$query = sprintf("SELECT TOP 10 TIME, LIGHT FROM arduino order by TIME desc");
+$query = sprintf("SELECT TIME,LIGHT FROM(SELECT TIME,LIGHT FROM arduino order by TIME desc LIMIT 10)var1 ORDER BY TIME asc");
 
 $result = $mysqli->query($query);
 

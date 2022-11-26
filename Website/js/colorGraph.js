@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $.ajax({
-        url : "https://projekt2sze.000webhostapp.com/php/data/color.php",
+        url : "https://projektmunka2sze.000webhostapp.com/php/data/color.php",
         type : "GET",
         success : function(data){
             console.log(data);
@@ -8,9 +8,9 @@ $(document).ready(function(){
             var id = [];
             var color = [];
 
-            for(var color in data) {
-                id.push(data[color].TIME);
-                color.push(data[color].COLLOR);
+            for(var i in data) {
+                id.push(data[i].TIME);
+                color.push(data[i].COLLOR);
             }
 
             var chartdata = {
@@ -19,7 +19,7 @@ $(document).ready(function(){
                     {
                         label: "Szín",
                         fill: false,
-                        lineTension: 0.5,
+                        lineTension: 0.1,
                         backgroundColor: "rgba(59, 89, 152, 0.75)",
                         borderColor: "rgba(59, 89, 152, 1)",
                         pointHoverBackgroundColor: "rgba(59, 89, 152, 1)",
