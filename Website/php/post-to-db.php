@@ -4,7 +4,7 @@
 $servername = "localhost";
 $dbname = "id19883322_adatok";
 $username = "id19883322_admin";
-$password = "*}Nv)[y6)G5dt[3Ij";
+$password = "ÁAdmin234567";
 
 $api_key_value = "d7a03fee5546592a37e22ff8f45bbbe45da4632dfed9a774e085d0e8b5d3fa73";
 
