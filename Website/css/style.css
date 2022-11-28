@@ -149,3 +149,6 @@ table{
   width: 800px;
   height:auto;
 }
+div{
+  gap: 1rem;
+}
