@@ -46,7 +46,7 @@ void loop() {
   data["moisture"] = moisture;
   data["luminosity"] = luminosity;
   
-  serializeJson(doc, Serial); //prit-eli a json objektumot
+  serializeJson(data, Serial); //print-eli a json objektumot
   
   delay(10000);
 }
