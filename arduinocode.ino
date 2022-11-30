@@ -9,7 +9,7 @@ int luminosity;
 
 const int szaraz = 810;
 const int nedves = 345;
-const in sotet = 300;
+const int sotet = 300;
 const int fenyes = 700;
 
 void setup() {
@@ -21,9 +21,8 @@ void setup() {
 }
 
 void loop() {
-  StaticJsonBuffer<1000> jsonBuffer;
-  JsonObject& data = jsonBuffer.createObject();
-  
+  StaticJsonDocument<256> data;
+  //DynamicJsonDocument data(2048); - Heap
   float humidity = dht.readHumidity();
   float temperature = dht.readTemperature(false);
 
@@ -46,8 +45,8 @@ void loop() {
   data["temperature"] = temperature;
   data["moisture"] = moisture;
   data["luminosity"] = luminosity;
-
-  jsonBuffer.clear();
+  
+  serializeJson(doc, Serial); //prit-eli a json objektumot
   
   delay(10000);
 }
