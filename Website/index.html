@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Ez a projektmunka 2. tantárgyhoz készült weboldal az arduino által mért adatok vizualizációjára"
+    />
+    <meta name="author" content="Pintér Szilveszter Richard" />
+    <meta name="keywords" content="arduino, öntöző, projekt, sze" />
+    <title>Arduino öntöző rendszer Weboldala</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <header>
+    <section class="hero">
+      <section class="board">
+        <figure class="board-anatomy">
+          <img
+            src="image/board-anatomy.png"
+            alt="board anatomy"
+            title="Arduino Uno"
+          />
+          <figcaption class="offscreen">Arduino Uno</figcaption>
+        </figure>
+      </section>
+      <h1 class="h1">
+        <span class="nowrap">Arduino öntöző </span>
+        <span class="nowrap">rendszer weboldala</span>
+      </h1>
+    </section>  
+      <nav class="nav">
+        <ul>
+            <li>
+                <a class="as" href="about.html">Rólunk</a>
+            </li>
+            <li>
+                <a class="as" href="contacts.html">Elérhetőségeink</a>
+            </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+        <h2>A kezdőoldal az utolsó 10 mért adatot tartalmazza vizualizálva gráfokkal</h2>
+        <div class="charts-container">
+        <canvas id="humChart"></canvas>
+        <canvas id="lightChart"></canvas>
+        <canvas id="moistChart"></canvas>
+        <canvas id="tempChart"></canvas>
+      </div>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/Chart.min.js"></script>
+        <script type="text/javascript" src="js/moistureGraph.js"></script>
+        <script type="text/javascript" src="js/temperatureGraph.js"></script>
+        <script type="text/javascript" src="js/humidityGraph.js"></script>
+        <script type="text/javascript" src="js/lightGraph.js"></script>
+    </main>
+    <footer>
+     
+      <br />
+      A projekt github oldala:<a
+        href="https://github.com/VMatthew/Projektmunka-2"
+        target="_blank"
+        >Itt</a
+      ><br />
+    </footer>
+  </body>
+</html>

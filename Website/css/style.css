@@ -1,0 +1,154 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+img{ display: block;}
+/*reset*/
+
+html {
+  font-family: sans-serif;
+}
+.nowrap{
+    white-space: nowrap;
+}
+.offscreen{
+    position: absolute;
+    left:-100000px
+}
+
+
+
+
+body {
+  background-color: snow;
+  box-shadow: 0 0 10px black;
+  margin: 0 auto auto;
+  max-width: 1600px;
+  padding: 50px;
+  min-width: 900px;
+  min-height: 1000px;
+  
+}
+header{
+    
+
+    border-radius: 1rem;
+    background-color:lightcyan;
+    background-image:url(../image/WallpaperDog-5486501.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+}
+main{
+border-radius: 1rem;
+background-color: lavender; 
+margin: 0 2rem 0 2rem;
+}
+footer{
+    text-align: center;
+    border-radius: 1rem;
+    background-color:whitesmoke;
+    margin: 1rem;
+}
+.hero{
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 30px;
+  border-radius: 1rem;
+  margin: 1rem;
+}
+nav{
+  background-color:dodgerblue;
+  border-radius: 1rem;
+  font-size: 150%;
+  margin: 1rem;
+}
+ul{
+  display: flex;
+  list-style-type: none;
+  justify-content: space-evenly;
+  gap: 1rem;
+  margin: 1rem; 
+}
+li {
+  border-radius: 1rem;
+  background-color: rgb(196, 226, 250);
+
+}
+li:hover{
+  background-color:azure;
+} 
+.as{
+  text-decoration: none;
+  
+}
+.board-anatomy{ 
+    width: 100%;
+}
+.board-anatomy img{
+    width:100%;
+    height: auto;
+    min-width: 100px;
+    border: 5px double lightblue;
+    border-radius: 1rem;
+    max-width: 650px;
+}
+.h1{
+    font-size: 250%;
+    text-align: center;
+    border: 0px;
+    border-radius: 1rem;
+    background-color: lightblue;
+    margin: 1rem;
+}
+h2 {
+  text-align: center;
+  border: 0px;
+  border-radius: 1rem;
+  background-color: paleturquoise;
+  margin: 1rem;
+}
+p {
+  color: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  line-height: 1.5;
+
+  border: 0px;
+  border-radius: 1rem;
+  background-color: lightskyblue;
+  overflow: hidden;
+  margin: 1rem;
+}
+a {
+  color: steelblue;
+}
+a:visited {
+  color: blueviolet;
+}
+a:hover,
+a:focus {
+  color: dodgerblue;
+}
+a:active {
+  color: aquamarine;
+}
+
+table{
+  margin: auto auto auto  auto;
+    position:relative;
+    border-radius: 1rem;
+    background-color: aliceblue;
+    text-align: center;
+    width: 500px;
+}
+.charts-container{
+  width: 800px;
+  height:auto;
+}
+div{
+  gap: 1rem;
+}
