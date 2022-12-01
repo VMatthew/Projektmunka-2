@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.prm1'
+    namespace 'com.example.android'
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.prm1"
+        applicationId "com.example.android"
         minSdk 21
         targetSdk 32
         versionCode 1

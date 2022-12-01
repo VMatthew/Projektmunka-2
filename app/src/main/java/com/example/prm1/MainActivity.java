@@ -1,4 +1,4 @@
-package com.example.prm1;
+package com.example.android;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Bitmap;
