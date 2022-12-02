@@ -76,10 +76,10 @@ void loop() {
   
   serializeJson(doc, Serial); //print-eli a json objektumot
   
-  float current = millis();
-  if(current >= 30000) 
+  float current = 0;
+  if(millis() - current > 30000) 
   {
-    current = 0;
+    current = millis();
     StaticJsonBuffer<1000> jsonBuffer;
     JsonObject& data = jsonBuffer.parseObject(doc);
     
