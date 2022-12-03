@@ -8,7 +8,7 @@ $password = "ÁAdmin234567";
 
 $api_key_value = "d7a03fee5546592a37e22ff8f45bbbe45da4632dfed9a774e085d0e8b5d3fa73";
 
-$api_key = $humidity = $temperature = $moisture = $light = $collor = "";
+$api_key = $humidity = $temperature = $moisture = $light = $collor =$tankData= "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $api_key = test_input($_POST["api_key"]);
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $moisture = test_input($_POST["MOIST"]);
         $light = test_input($_POST["LIGHT"]);
         $collor = test_input($_POST["COLLOR"]);
-
+        $tankData=test_input($_POST["tankData"]);
 
 
 
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Connection failed: " . $connection->connect_error);
         }
 
-        $sql = "INSERT INTO arduino (HUM, TEMP, MOIST, LIGHT, COLLOR) VALUES ('" . $humidity . "', '" . $temperature . "', '" . $moisture . "', '" . $light . "', '" . $collor . "')";
+        $sql = "INSERT INTO arduino (HUM, TEMP, MOIST, LIGHT, COLLOR, tankData) VALUES ('" . $humidity . "', '" . $temperature . "', '" . $moisture . "', '" . $light . "', '" . $collor . "','" .$tankData."')";
 
         if ($connection->query($sql) === TRUE) {
             echo "New record created successfully";
