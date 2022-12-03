@@ -1,7 +1,13 @@
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
-#include <WiFiClient.h>
-#include <SoftwareSerial.h>
+#ifdef ESP32
+  #include <WiFi.h>
+  #include <HTTPClient.h>
+#else
+  #include <ESP8266WiFi.h>
+  #include <ESP8266HTTPClient.h>
+  #include <WiFiClient.h>
+#endif
+
+#include <String.h>
 #include <ArduinoJson.h>
 #include <DHT.h>
 #define DHTPIN 2
@@ -16,21 +22,28 @@ const int nedves = 345;
 const int sotet = 300;
 const int fenyes = 700;
 
+// Replace with your network credentials
+const char* ssid     = "REPLACE_WITH_YOUR_SSID";
+const char* password = "REPLACE_WITH_YOUR_PASSWORD";
 
-const char* ssid     = "*******";
-const char* password = "*****";
-
-
+// REPLACE with your Domain name and URL path or IP address with path
 const char* serverName = "https://projektmunka2sze.000webhostapp.com/";
 
-String apiKeyValue = "grandeurlb5y82ax0ykm0jjohxmv7vo5";
+// Keep this API Key value to be compatible with the PHP code provided in the project page. 
+// If you change the apiKeyValue value, the PHP file /post-esp-data.php also needs to have the same key 
+String apiKeyValue = "tPmAT5Ab3j7F9";
 
-String deviceId = "devicelb5ysw860yvi0jjoalihb7of";
+String sensorName = "Sensors_4";
+String sensorLocation = "Home";
+
+const int szaraz = 810;
+const int nedves = 345;
+const int sotet = 300;
+const int fenyes = 700;
 
 void setup() {
-  Serial.begin(9600);
-  nodemcu.begin(9600);
-  while (!Serial) continue;
+  Serial.begin(115200);
+  
   WiFi.begin(ssid, password);
   Serial.println("Connecting");
   while(WiFi.status() != WL_CONNECTED) { 
@@ -41,101 +54,57 @@ void setup() {
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
 
-  dht.begin();
-  delay(1000);
-  
-  Serial.println("Program started");
 }
 
 void loop() {
-
-  StaticJsonDocument<256> doc;
-  //DynamicJsonDocument doc(2048); - Heap
+  //Check WiFi connection status
   float humidity = dht.readHumidity();
   float temperature = dht.readTemperature(false);
 
-  Serial.print("hum: ");
-  Serial.println(humidity);
-  Serial.print("temp: ");
-  Serial.println(temperature);
   sensorval = analogRead(A0);
   moisture = map(sensorval, nedves, szaraz, 100, 0);
   sensorval = analogRead(A2);
   luminosity = map(sensorval, fenyes, sotet, 100, 0);
-  Serial.print("moisture: ");
-  Serial.print(moisture);
-  Serial.println("%");
-  Serial.print("lum: ");
-  Serial.print(luminosity);
-  Serial.println("%");
-  
-  doc["humidity"] = humidity;
-  doc["temperature"] = temperature;
-  doc["moisture"] = moisture;
-  doc["luminosity"] = luminosity;
-  
-  serializeJson(doc, Serial); //print-eli a json objektumot
-  
-  float current = 0;
-  if(millis() - current > 30000) 
-  {
-    current = millis();
-    StaticJsonBuffer<1000> jsonBuffer;
-    JsonObject& data = jsonBuffer.parseObject(doc);
+
+  String Shumidity = String(humidity);
+  String Stemperature = String(temperature)+" C°";
+  String Smoisture = String(moisture)+"%";
+  String Sluminosity = String(luminosity)+"%";
+
+  if(WiFi.status()== WL_CONNECTED){
+    WiFiClient client;
+    HTTPClient http;
     
+    // Your Domain name with URL path or IP address with path
+    http.begin(client, serverName);
+    
+    // Specify content-type header
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    
+    // Prepare your HTTP POST request data
+    String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + sensorName
+                          + "&location=" + sensorLocation + "&humidity=" + Shumidity)
+                          + "&temperature=" + Stemperature) + "&moisture=" + Smoisture + "" + "&luminosity=" + Sluminosity;
+    Serial.print("httpRequestData: ");
+    Serial.println(httpRequestData);
 
-    if (data == JsonObject::invalid()) {
-      //Serial.println("Invalid Json Object");
-      jsonBuffer.clear();
-      return;
-    }
-
-    Serial.println("JSON Object Recieved");
-    Serial.print("Recieved distance:  ");
-    int distance = data["distance"];
-    Serial.println(distance);
-    Serial.print("Recieved moisture:  ");
-    int moisture = data["moisture"];
-    Serial.println(moisture);
-    Serial.print("Recieved humidity:  ");
-    float humidity = data["humidity"];
-    Serial.println(humidity);
-    Serial.print("Recieved temperature:  ");
-    float temperature = data["temperature"];
-    Serial.println(temperature);
-    Serial.println("-----------------------------------------");
-
-
-    if(WiFi.status()== WL_CONNECTED){
-      WiFiClient client;
-      HTTPClient http;
-      
-      http.begin(client, serverName);
-      
-      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-      
-      String httpRequestData = "api_key=" + apiKeyValue + "&distance=" + String(distance)
-                            + "&moisture=" + String(moisture) + "&humidity=" + String(humidity) + "&temperature=" + String(temperature) + "";
-      Serial.print("httpRequestData: ");
-      Serial.println(httpRequestData);
-
-      int httpResponseCode = http.POST(httpRequestData);
+    // Send HTTP POST request
+    int httpResponseCode = http.POST(httpRequestData);
         
-      if (httpResponseCode>0) {
-        Serial.print("HTTP Response code: ");
-        Serial.println(httpResponseCode);
-      }
-      else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
-      }
-
-      http.end();
+    if (httpResponseCode>0) {
+      Serial.print("HTTP Response code: ");
+      Serial.println(httpResponseCode);
     }
     else {
-      Serial.println("WiFi Disconnected");
+      Serial.print("Error code: ");
+      Serial.println(httpResponseCode);
     }
-
+    // Free resources
+    http.end();
   }
-  delay(10000);
+  else {
+    Serial.println("WiFi Disconnected");
+  }
+  //Send an HTTP POST request every 30 seconds
+  delay(30000);  
 }
