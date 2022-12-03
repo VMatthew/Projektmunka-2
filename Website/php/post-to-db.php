@@ -8,7 +8,7 @@ $password = "ÁAdmin234567";
 
 $api_key_value = "d7a03fee5546592a37e22ff8f45bbbe45da4632dfed9a774e085d0e8b5d3fa73";
 
-$api_key = $light = $collor = $moisture = $humidity = $temperature = "";
+$api_key = $humidity = $temperature = $moisture = $light = $collor = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $api_key = test_input($_POST["api_key"]);
