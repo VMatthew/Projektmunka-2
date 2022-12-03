@@ -27,11 +27,11 @@ const char* ssid     = "REPLACE_WITH_YOUR_SSID";
 const char* password = "REPLACE_WITH_YOUR_PASSWORD";
 
 // REPLACE with your Domain name and URL path or IP address with path
-const char* serverName = "https://projektmunka2sze.000webhostapp.com/";
+const char* serverName = "https://projektmunka2sze.000webhostapp.com/post-to-db.php";
 
 // Keep this API Key value to be compatible with the PHP code provided in the project page. 
 // If you change the apiKeyValue value, the PHP file /post-esp-data.php also needs to have the same key 
-String apiKeyValue = "tPmAT5Ab3j7F9";
+String apiKeyValue = "d7a03fee5546592a37e22ff8f45bbbe45da4632dfed9a774e085d0e8b5d3fa73";
 
 String sensorName = "Sensors_4";
 String sensorLocation = "Home";
@@ -82,8 +82,7 @@ void loop() {
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
     
     // Prepare your HTTP POST request data
-    String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + sensorName
-                          + "&location=" + sensorLocation + "&humidity=" + Shumidity)
+    String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + "&humidity=" + Shumidity)
                           + "&temperature=" + Stemperature) + "&moisture=" + Smoisture + "" + "&luminosity=" + Sluminosity;
     Serial.print("httpRequestData: ");
     Serial.println(httpRequestData);
