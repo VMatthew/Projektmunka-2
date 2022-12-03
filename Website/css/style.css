@@ -1,24 +1,23 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-img{ display: block;}
+img {
+  display: block;
+}
 /*reset*/
 
 html {
   font-family: sans-serif;
 }
-.nowrap{
-    white-space: nowrap;
+.nowrap {
+  white-space: nowrap;
 }
-.offscreen{
-    position: absolute;
-    left:-100000px
+.offscreen {
+  position: absolute;
+  left: -100000px;
 }
-
-
-
 
 body {
   background-color: snow;
@@ -28,31 +27,27 @@ body {
   padding: 50px;
   min-width: 900px;
   min-height: 1000px;
-  
 }
-header{
-    
-
-    border-radius: 1rem;
-    background-color:lightcyan;
-    background-image:url(../image/WallpaperDog-5486501.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-
+header {
+  border-radius: 1rem;
+  background-color: lightcyan;
+  background-image: url(../image/WallpaperDog-5486501.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
-main{
-border-radius: 1rem;
-background-color: lavender; 
-margin: 0 2rem 0 2rem;
+main {
+  border-radius: 1rem;
+  background-color: lavender;
+  margin: 0 2rem 0 2rem;
 }
-footer{
-    text-align: center;
-    border-radius: 1rem;
-    background-color:whitesmoke;
-    margin: 1rem;
+footer {
+  text-align: center;
+  border-radius: 1rem;
+  background-color: whitesmoke;
+  margin: 1rem;
 }
-.hero{
+.hero {
   padding: 20px;
   display: flex;
   justify-content: flex-start;
@@ -61,49 +56,55 @@ footer{
   border-radius: 1rem;
   margin: 1rem;
 }
-nav{
-  background-color:dodgerblue;
+nav {
+  background-color: dodgerblue;
   border-radius: 1rem;
   font-size: 150%;
   margin: 1rem;
 }
-ul{
+ul {
   display: flex;
   list-style-type: none;
   justify-content: space-evenly;
   gap: 1rem;
-  margin: 1rem; 
+  margin: 1rem;
 }
 li {
   border-radius: 1rem;
   background-color: rgb(196, 226, 250);
-
 }
-li:hover{
-  background-color:azure;
-} 
-.as{
+li:hover {
+  background-color: azure;
+}
+.as {
   text-decoration: none;
+}
+.board-anatomy {
+  width: 100%;
+}
+.board-anatomy img {
+  width: 100%;
+  height: auto;
+  min-width: 100px;
+  border: 5px double lightblue;
+  border-radius: 1rem;
+  max-width: 650px;
+}
+.h1 {
+  font-size: 250%;
+  text-align: center;
+  border: 0px;
+  border-radius: 1rem;
+  background-color: lightblue;
+  margin: 1rem;
+}
+.alarm {
   
-}
-.board-anatomy{ 
-    width: 100%;
-}
-.board-anatomy img{
-    width:100%;
-    height: auto;
-    min-width: 100px;
-    border: 5px double lightblue;
-    border-radius: 1rem;
-    max-width: 650px;
-}
-.h1{
-    font-size: 250%;
-    text-align: center;
-    border: 0px;
-    border-radius: 1rem;
-    background-color: lightblue;
-    margin: 1rem;
+  text-align: center;
+  border: 0px;
+  border-radius: 1rem;
+  background-color: red;
+  margin: 1rem;
 }
 h2 {
   text-align: center;
@@ -137,18 +138,25 @@ a:active {
   color: aquamarine;
 }
 
-table{
-  margin: auto auto auto  auto;
-    position:relative;
-    border-radius: 1rem;
-    background-color: aliceblue;
-    text-align: center;
-    width: 500px;
+table {
+  margin: auto auto auto auto;
+  position: relative;
+  border-radius: 1rem;
+  background-color: aliceblue;
+  text-align: center;
+  width: 500px;
 }
-.charts-container{
+.charts-container {
   width: 800px;
-  height:auto;
+  height: auto;
 }
-div{
+div {
   gap: 1rem;
+}
+.alarm {
+  background-color: red;
+  text-align: center;
+  border: 0px;
+  border-radius: 1rem;
+  margin: 1rem;
 }
