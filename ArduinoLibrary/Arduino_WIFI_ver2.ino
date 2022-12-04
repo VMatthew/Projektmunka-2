@@ -27,7 +27,7 @@ bool kifogyott;
 int waterlevel;
 
 bool netrequest = false;
-string notfication ="";
+String notfication ="";
 
 /*int trigpin = 8;
 int echopin = 9;
