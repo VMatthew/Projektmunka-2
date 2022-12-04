@@ -133,52 +133,43 @@ void loop() {
   }
 
   //Bár a delay 5 secre van rakva ez a rész csak 30 secenként fusson le
-  double current=0;
-  if(millis() - current >= 30000) {
-    current = millis();
 
-    //WIFI kapcsolat ellenőrzése
-    if(WiFi.status()== WL_CONNECTED){
-      WiFiClient client;
-      HTTPClient http;
+   //WIFI kapcsolat ellenőrzése
+   if(WiFi.status()== WL_CONNECTED){
+     WiFiClient client;
+     HTTPClient http;
       
-      // Domain név URL-el vagy IP-vel
-      http.begin(client, serverName);
+     // Domain név URL-el vagy IP-vel
+     http.begin(client, serverName);
       
-      // Specify content-type header
-      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+     // Specify content-type header
+     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
       
-      // HTTP POST request adat előkészítése
-      String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + sensorName
-                            + "&location=" + sensorLocation + "&humidity=" + Shumidity
-                            + "&temperature=" + Stemperature + "&moisture=" + Smoisture  + "&luminosity=" + Sluminosity;
-      Serial.print("httpRequestData: ");      
-      Serial.println(httpRequestData);
-      notification="";
-
-      /*
-      String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + sensorName
+     // HTTP POST request adat előkészítése
+     String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + sensorName
                             + "&location=" + sensorLocation + "&humidity=" + Shumidity)
                             + "&temperature=" + Stemperature) + "&moisture=" + Smoisture + "" + "&luminosity=" + Sluminosity + "&notification=" + notification;
-      */
+     Serial.print("httpRequestData: ");      
+     Serial.println(httpRequestData);
+     notification="";
 
-      // HTTP POST küldése
-      int httpResponseCode = http.POST(httpRequestData);
+     // HTTP POST küldése
+     int httpResponseCode = http.POST(httpRequestData);
           
-      if (httpResponseCode>0) {
-        Serial.print("HTTP Response code: ");
-        Serial.println(httpResponseCode);
-      }
-      else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
-      }
-      // tárhely felszabadítása
-      http.end();
-    }
-    else {
-      Serial.println("WiFi Disconnected");
-    }
+     if (httpResponseCode>0) {
+       Serial.print("HTTP Response code: ");
+       Serial.println(httpResponseCode);
+     }
+     else {
+       Serial.print("Error code: ");
+       Serial.println(httpResponseCode);
+     }
+     // tárhely felszabadítása
+     http.end();
+   }
+   else {
+     Serial.println("WiFi Disconnected");
+   }
   }
   delay(5000);  
 }
