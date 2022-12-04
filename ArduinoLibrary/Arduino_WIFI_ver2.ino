@@ -7,6 +7,13 @@
   #include <WiFiClient.h>
 #endif
 
+//PIN-ek:
+  //páratartalom és hőmérséklet érzékelő DATA-->>Digital 2 pin
+  //Talajnedvesség érzékelő DATA-->>Analog 0 pin
+  //Fény érzékelő DATA-->>Analog 2 pin
+  //vízszint érzékelő érzékelő DATA-->>Analog 3 pin
+  //Relé INPUT -->> Analog 5 pin
+
 #include <String.h>
 #include <ArduinoJson.h>
 #include <DHT.h>
@@ -18,6 +25,9 @@ int moisture;
 int luminosity;
 bool kifogyott;
 int waterlevel;
+
+bool netrequest = false;
+string notfication ="";
 
 /*int trigpin = 8;
 int echopin = 9;
@@ -92,22 +102,34 @@ void loop() {
 
   if (waterlevel < minviz){
     kifogyott = true;
+    notfication+= "Víz =0; ";
   }
   else {
     kifogyott = false;
   }
+  //Notfication
+  if(humidity<40 && notification.indexOf("Pára++ ;") == -1) { notification+="Pára++ ;"; }
+  if(temperature<15 && notification.indexOf("Temp++ ;") == -1) { notification+="Temp++ ;"; }
+  if(luminosity<20 && notification.indexOf("Fény++ ;") == -1) { notification+="Fény++ ;"; }
 
   //Stringbe konvertálás
   String Shumidity = String(humidity);
-  String Stemperature = String(temperature)+" C°";
-  String Smoisture = String(moisture)+"%";
-  String Sluminosity = String(luminosity)+"%";
+  String Stemperature = String(temperature+" C°");
+  String Smoisture = String(moisture+"%");
+  String Sluminosity = String(luminosity+"%");
 
   //nagyon alap öntöző kód
   if (moisture <85 and kifogyott == false){
+    if(notification.indexOf("Öntözés történt ;") == -1 ) { notification+="Öntözés történt ;"; }
     digitalWrite (relepin, LOW);
     delay (1000);
     digitalWrite (relepin, HIGH);
+  }
+
+  //max 49 char lehet ha minden notification hozzáadodik, itt ellenőrizzük
+  if(notification.length() >= 50 ) {
+    Serial.println("Notification hibás!!");
+    notification="";
   }
 
   //Bár a delay 5 secre van rakva ez a rész csak 30 secenként fusson le
@@ -128,10 +150,17 @@ void loop() {
       
       // HTTP POST request adat előkészítése
       String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + sensorName
-                            + "&location=" + sensorLocation + "&humidity=" + Shumidity)
-                            + "&temperature=" + Stemperature) + "&moisture=" + Smoisture + "" + "&luminosity=" + Sluminosity;
-      Serial.print("httpRequestData: ");
+                            + "&location=" + sensorLocation + "&humidity=" + Shumidity
+                            + "&temperature=" + Stemperature + "&moisture=" + Smoisture  + "&luminosity=" + Sluminosity;
+      Serial.print("httpRequestData: ");      
       Serial.println(httpRequestData);
+      notification="";
+
+      /*
+      String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + sensorName
+                            + "&location=" + sensorLocation + "&humidity=" + Shumidity)
+                            + "&temperature=" + Stemperature) + "&moisture=" + Smoisture + "" + "&luminosity=" + Sluminosity + "&notification=" + notification;
+      */
 
       // HTTP POST küldése
       int httpResponseCode = http.POST(httpRequestData);
