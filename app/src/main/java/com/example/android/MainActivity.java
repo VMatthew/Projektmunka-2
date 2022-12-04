@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         WebView browser = (WebView) findViewById(R.id.webview);
         browser.getSettings().setLoadWithOverviewMode(true);
         browser.getSettings().setUseWideViewPort(true);
-
     }
 
     private class MywebClient extends WebViewClient{
