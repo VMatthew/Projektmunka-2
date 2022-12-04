@@ -114,9 +114,9 @@ void loop() {
 
   //Stringbe konvertálás
   String Shumidity = String(humidity);
-  String Stemperature = String(temperature+" C°");
-  String Smoisture = String(moisture+"%");
-  String Sluminosity = String(luminosity+"%");
+  String Stemperature = String(temperature)+" C°";
+  String Smoisture = String(moisture)+"%";
+  String Sluminosity = String(luminosity)+"%";
 
   //nagyon alap öntöző kód
   if (moisture <85 and kifogyott == false){
