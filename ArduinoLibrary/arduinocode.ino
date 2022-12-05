@@ -77,7 +77,6 @@ void loop() {
 	float humidity = dht.readHumidity();
 	float temperature = dht.readTemperature(false);
 	GetColors();
-  Red=10, Blue=20, Green=10;
 	float Reddiff=ORed-Red;
 	float Greendiff=OGreen-Green;
 	float Bluediff=OBlue-Blue;
