@@ -17,7 +17,7 @@ const char* serverName = "http://projektmunka2sze.000webhostapp.com/php/post-to-
 // PHP kóddal kompatibilis api key
 String apiKeyValue = "d7a03fee5546592a37e22ff8f45bbbe45da4632dfed9a774e085d0e8b5d3fa73";
 
-String alldoc;
+String alldata;
 
 void setup() {
 	Serial.begin(9600);
@@ -95,12 +95,12 @@ Serial.print("Recieved moisture:  ");
 		http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 		  
 		// HTTP POST request adat előkészítése
-    String httpRequestdoc = alldoc;
+    String httpRequestdoc = alldata;
 		Serial.print("httpRequestdoc: ");      
-		Serial.println(httpRequestdoc);
+		Serial.println(httpRequestData);
 		
 		// HTTP POST küldése
-		int httpResponseCode = http.POST(httpRequestdoc);
+		int httpResponseCode = http.POST(httpRequestData);
 		
 		if (httpResponseCode>0) {
 		   Serial.print("HTTP Response code: ");
