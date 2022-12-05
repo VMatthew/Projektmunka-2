@@ -17,7 +17,7 @@ int light;
 bool kifogyott;
 int waterlevel;
 int minviz = 400; //vízszint ami alatt öntözünk
-int Red=0, Blue=0, Green=0;  //RGB values 
+int Red=0, Blue=0, Green=0, ORed=0, OBlue=0, OGreen=0;  //RGB values 
 bool O=false;
 bool netrequest = false;
 
@@ -36,11 +36,6 @@ const int TX_pin = 6;
 SoftwareSerial softSerial(RX_pin, TX_pin); // RX, TX
 // sendLineLength default 60, receiveLineLength default 60
 SerialComs coms(100,100);
-
-GetColors();
-int ORed = Red;
-int OGreen  = Green;*********************
-int OBlue = Blue;
 
 void setup() {
   Serial.begin(115200);
@@ -65,9 +60,12 @@ void setup() {
   pinMode (relepin, OUTPUT);
   //pinMode (trigpin, OUTPUT);
   //pinMode (echopin, INPUT);
-  digitalWrite (relepin, HIGH); */ 
+  digitalWrite (relepin, HIGH); 
   
-
+  GetColors();
+  ORed = Red;
+  OGreen  = Green;
+  OBlue = Blue;
   delay(1000);
   Serial.println("Program Started!");
 }
@@ -112,8 +110,9 @@ void loop() {
 		delay (1000);
 		digitalWrite (relepin, HIGH);
 		
-	}*/
+	}
 	if (coms.textToSend.isEmpty()) {
+
 
     coms.textToSend.print("&h=");
     coms.textToSend.print(humidity);
@@ -127,19 +126,19 @@ void loop() {
     coms.textToSend.print(color);
 	  coms.textToSend.print("&n=");
 	
-	//Notfication
-	if(O) { coms.textToSend.print("Watering done ;"); }
-	if(humidity<40 ) { coms.textToSend.print("HUM++ ;"); }
-	if(temperature<15 ) { coms.textToSend.print("Temp++ ;"); }
-	if(light<20 ) { coms.textToSend.print("Light++ ;"); }
-  if(waterlevel<minviz) { coms.texToSend.print("WATER!"); }
+    //Notfication
+    if(O) { coms.textToSend.print("Watering done ;"); }
+    if(humidity<40 ) { coms.textToSend.print("HUM++ ;"); }
+    if(temperature<15 ) { coms.textToSend.print("Temp++ ;"); }
+    if(light<20 ) { coms.textToSend.print("Light++ ;"); }
+    if(waterlevel<minviz) { coms.textToSend.print("WATER!"); }
 
-	coms.textToSent.print("");
+	coms.textToSend.print("");
 	
   Serial.println(coms.textToSend);
 	O=false;
-	delay(5000);
   }
+  delay(5000);
 }
 
 void GetColors()  //Színérzékelő fügvény
@@ -155,4 +154,3 @@ void GetColors()  //Színérzékelő fügvény
   Green = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);
   delay(20);  
 }
-
