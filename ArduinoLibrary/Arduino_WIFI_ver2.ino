@@ -1,12 +1,3 @@
-#ifdef ESP32
-  #include <WiFi.h>
-  #include <HTTPClient.h>
-#else
-  #include <ESP8266WiFi.h>
-  #include <ESP8266HTTPClient.h>
-  #include <WiFiClient.h>
-#endif
-
 //PIN-ek:
   //páratartalom és hőmérséklet érzékelő DATA-->>Digital 2 pin
   //Talajnedvesség érzékelő DATA-->>Analog 0 pin
