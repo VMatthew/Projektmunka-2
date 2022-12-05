@@ -137,7 +137,7 @@ void loop() {
   Serial.println(coms.textToSend);
 	O=false;
   }
-  delay(5000);
+  delay(2000);
 }
 
 void GetColors()  //Színérzékelő fügvény
