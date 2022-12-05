@@ -68,7 +68,7 @@ void setup() {
   OGreen  = Green;
   OBlue = Blue;
 
-  dht.begin(115200);
+  dht.begin();
   delay(1000);
   Serial.println("Program Started!");
 }
