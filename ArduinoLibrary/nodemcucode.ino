@@ -11,8 +11,8 @@ SoftwareSerial softSerial(D5, D6);
 SerialComs coms(100,100);
 
 // Wifi név és jelszó
-const char* ssid     = "REPLACE_WITH_YOUR_SSID";
-const char* password = "REPLACE_WITH_YOUR_PASSWORD";
+const char* ssid     = "VargaNTW_2.4";
+const char* password = "Varga19NTW24";
 
 // weblap domain
 const char* serverName = "http://projektmunka2sze.000webhostapp.com/php/post-to-db.php";
@@ -20,6 +20,7 @@ const char* serverName = "http://projektmunka2sze.000webhostapp.com/php/post-to-
 // PHP kóddal kompatibilis api key
 String apiKeyValue = "d7a03fee5546592a37e22ff8f45bbbe45da4632dfed9a774e085d0e8b5d3fa73";
 
+//String alldata="api_key=" + apiKeyValue;
 String alldata="";
 
 float ph; // ph len 5 float?
@@ -55,53 +56,56 @@ void setup() {
   Serial.println("Program Started!!");
   delay(1000);
   Serial.println(F("ESP8266 Setup finished."));
+  // firebase stuff here
 
 }
-String str="";
+
+String str = "";
+
 void loop() {
   coms.sendAndReceive(); // must do this every loop
 
   if (!coms.textReceived.isEmpty()) { // got some data
-    Serial.println("Recieved data on nodemcu: ")
-    Serial.println(coms.getTextReceived());
-    str= coms.getTextReceived();
-    alldata="api_key=" + apiKeyValue + str;
-    Serial.println("Data to send: ");
-    Serial.println(alldata);
-    
-    //WIFI kapcsolat ellenőrzése
-    if(WiFi.status()== WL_CONNECTED){
-      WiFiClient client;
-      HTTPClient http;
-        
-      // Domain név URL-el vagy IP-vel
-      http.begin(client, serverName);
-        
-      // Specify content-type header
-      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-        
-      // HTTP POST request adat előkészítése
-      String httpRequestData = alldata;
-      Serial.print("httpRequestdoc: ");      
-      Serial.println(httpRequestData);
-      
-      // HTTP POST küldése
-      int httpResponseCode = http.POST(httpRequestData);
-      
-      if (httpResponseCode>0) {
-        Serial.print("HTTP Response code: ");
-        Serial.println(httpResponseCode);
-      }
-      else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
-      }
-      // tárhely felszabadítása
-      http.end();
-      }
-    else {
-      Serial.println("WiFi Disconnected");
-    }
+	Serial.println("Recieved data on nodemcu: ");
+  Serial.println(coms.textReceived.c_str());
+  str= coms.textReceived.c_str();
+  alldata="api_key=" + apiKeyValue + str;
+	Serial.println("Data to send: ");
+	Serial.println(alldata);
+	
+	//WIFI kapcsolat ellenőrzése
+	if(WiFi.status()== WL_CONNECTED){
+		WiFiClient client;
+		HTTPClient http;
+		  
+		// Domain név URL-el vagy IP-vel
+		http.begin(client, serverName);
+		  
+		// Specify content-type header
+		http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+		  
+		// HTTP POST request adat előkészítése
+    String httpRequestData = alldata;
+		Serial.print("httpRequestdoc: ");      
+		Serial.println(httpRequestData);
+		
+		// HTTP POST küldése
+		int httpResponseCode = http.POST(httpRequestData);
+		
+		if (httpResponseCode>0) {
+		   Serial.print("HTTP Response code: ");
+		   Serial.println(httpResponseCode);
+		}
+		else {
+		  Serial.print("Error code: ");
+		  Serial.println(httpResponseCode);
+		}
+		// tárhely felszabadítása
+		http.end();
+	   }
+   else {
+		Serial.println("WiFi Disconnected");
+	}
   }
   delay(5000);
 }
