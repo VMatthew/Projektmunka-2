@@ -1,6 +1,5 @@
-#include <SerialSoftware.h>
-#include <ArduinoJson.h>
-#include <DHT.h>
+#include "SerialComs.h"
+#include "SoftwareSerial.h"
 #include <SoftwareSerial.h>
 #include <DHT.h>
 #define s0 8  
@@ -14,12 +13,12 @@ DHT dht(DHTPIN, DHTTYPE);
 
 int sensorval;
 int moisture;
-int luminosity;
+int light;
 bool kifogyott;
 int waterlevel;
 int minviz = 400; //vízszint ami alatt öntözünk
 int Red=0, Blue=0, Green=0;  //RGB values 
-
+bool O=false;
 bool netrequest = false;
 
 //Mért értékek a map függvényekhez
@@ -29,17 +28,32 @@ const int sotet = 300;
 const int fenyes = 700;
 const int relepin = A5; //Relé INPUT -->> Analog 5 pin
 
+// UNO
+const int RX_pin = 5;
+const int TX_pin = 6;
 
-SoftwareSerial nodemcu(5, 6);
-String notification ="";
+// else you need to define your own RX_pin, TX_pin
+SoftwareSerial softSerial(RX_pin, TX_pin); // RX, TX
+// sendLineLength default 60, receiveLineLength default 60
+SerialComs coms(100,100);
 
-// PHP kóddal kompatibilis api key
-String apiKeyValue = "d7a03fee5546592a37e22ff8f45bbbe45da4632dfed9a774e085d0e8b5d3fa73";
+GetColors();
+int ORed = Red;
+int OGreen  = Green;*********************
+int OBlue = Blue;
 
 void setup() {
-  Serial.begin(9600); 
-  dht.begin();
-  nodemcu.begin(9600);
+  Serial.begin(115200);
+  Serial.println();
+  Serial.println("UnoSoftSerialCSV");
+  SafeString::setOutput(Serial); // enable error msgs and debug
+  softSerial.begin(115200);   // Initialize the "link" serial port
+  if (!coms.connect(softSerial)) {
+    while (1) {
+      Serial.println(F("Out of memory"));
+      delay(3000);
+    }
+  }
   pinMode(s0,OUTPUT);    //pin modes
   pinMode(s1,OUTPUT);
   pinMode(s2,OUTPUT);
@@ -47,90 +61,85 @@ void setup() {
   pinMode(out,INPUT);
   digitalWrite(s0,HIGH);
   digitalWrite(s1,HIGH);
-  GetColors();
-  int ORed = Red;
-  int OGreen  = Green;
-  int OBlue = Blue;
+  
   pinMode (relepin, OUTPUT);
   //pinMode (trigpin, OUTPUT);
   //pinMode (echopin, INPUT);
-  digitalWrite (relepin, HIGH);  
+  digitalWrite (relepin, HIGH); */ 
   
 
   delay(1000);
-  serial.println("Program Started!")
-
+  Serial.println("Program Started!");
 }
 
+int count = 0;
 void loop() {
-  //Változók feltöltése
-  StaticJsonDocument<1000> doc;
+	coms.sendAndReceive(); // must do this every loop
+	
+	float humidity = dht.readHumidity();
+	float temperature = dht.readTemperature(false);
+	GetColors();
+  Red=10, Blue=20, Green=10;
+	float Reddiff=ORed-Red;
+	float Greendiff=OGreen-Green;
+	float Bluediff=OBlue-Blue;
+	float color =  (abs(Reddiff) + abs(Greendiff) + abs(Bluediff))/765;
+	
+	sensorval = analogRead(A0); //Talajnedvesség érzékelő DATA-->>Analog 0 pin
+	moisture = map(sensorval, nedves, szaraz, 100, 0);
+	sensorval = analogRead(A2); //Fény érzékelő DATA-->>Analog 2 pin
+	light = map(sensorval, fenyes, sotet, 100, 0);
+	waterlevel = analogRead(A3); //vízszint érzékelő érzékelő DATA-->>Analog 3 pin
   
-  float humidity = dht.readHumidity();
-  float temperature = dht.readTemperature(false);
+	if (waterlevel < minviz){
+		kifogyott = true;
+	}
+	else {
+		kifogyott = false;
+	}	
+ 
+	//nagyon alap öntöző kód
+	if (moisture <85 and kifogyott == false){
+		O=true;
+		digitalWrite (relepin, LOW);
+		delay (1000);
+		digitalWrite (relepin, HIGH);
+	}
+	
+	//netrequest alapján öntözés
+	if (netrequest == true and kifogyott == false){
+		digitalWrite (relepin, LOW);
+		delay (1000);
+		digitalWrite (relepin, HIGH);
+		
+	}*/
+	if (coms.textToSend.isEmpty()) {
 
-  GetColors();
-  float Reddiff=ORed-Red;
-  float Greendiff=OGreen-Green;
-  float Bluediff=OBlue-Blue;
-  float x =  (abs(Reddiff) + abs(Greendiff) + abs(Bluediff))/765;
-  String ColourDistortion = String(x*100)+"%";
+    coms.textToSend.print("&h=");
+    coms.textToSend.print(humidity);
+    coms.textToSend.print("&t=");
+    coms.textToSend.print(temperature);
+	  coms.textToSend.print("&m=");
+    coms.textToSend.print(moisture);
+	  coms.textToSend.print("&l=");
+    coms.textToSend.print(light);
+	  coms.textToSend.print("&c=");
+    coms.textToSend.print(color);
+	  coms.textToSend.print("&n=");
+	
+	//Notfication
+	if(O) { coms.textToSend.print("Watering done ;"); }
+	if(humidity<40 ) { coms.textToSend.print("HUM++ ;"); }
+	if(temperature<15 ) { coms.textToSend.print("Temp++ ;"); }
+	if(light<20 ) { coms.textToSend.print("Light++ ;"); }
+  if(waterlevel<minviz) { coms.texToSend.print("WATER!"); }
 
-  sensorval = analogRead(A0); //Talajnedvesség érzékelő DATA-->>Analog 0 pin
-  moisture = map(sensorval, nedves, szaraz, 100, 0);
-  sensorval = analogRead(A2); //Fény érzékelő DATA-->>Analog 2 pin
-  luminosity = map(sensorval, fenyes, sotet, 100, 0);
-  waterlevel = analogRead(A3); //vízszint érzékelő érzékelő DATA-->>Analog 3 pin
-
-  if (waterlevel < minviz){
-    kifogyott = true;
-    notfication+= "Víz =0; ";
+	coms.textToSent.print("");
+	
+  Serial.println(coms.textToSend);
+	O=false;
+	delay(5000);
   }
-  else {
-    kifogyott = false;
-  }
-
-  //Notfication
-  if(humidity<40 && notification.indexOf("Pára++ ;") == -1) { notification+="Pára++ ;"; }
-  if(temperature<15 && notification.indexOf("Temp++ ;") == -1) { notification+="Temp++ ;"; }
-  if(luminosity<20 && notification.indexOf("Fény++ ;") == -1) { notification+="Fény++ ;"; }
-
-
-  //nagyon alap öntöző kód
-  if (moisture <85 and kifogyott == false){
-    if(notification.indexOf("Öntözés történt ;") == -1 ) { notification+="Öntözés történt ;"; }
-    digitalWrite (relepin, LOW);
-    delay (1000);
-    digitalWrite (relepin, HIGH);
-  }
-  
-  //netrequest alapján öntözés
-  if (netrequest == true and kifogyott == false){
-    if(notification.indexOf("Öntözés történt ;") == -1 ) {
-      digitalWrite (relepin, LOW);
-      delay (1000);
-      digitalWrite (relepin, HIGH);
-    }
-  }
-
-  //max 49 char lehet ha minden notification hozzáadodik, itt ellenőrizzük
-  if(notification.length() >= 50 ) {
-    Serial.println("Notification hibás!!");
-    notification="";
-  }
-
-  //JSON feltöltése
-  doc["humidity"] = humidity;
-  doc["temperature"] = temperature;
-  doc["mositure"]=40;
-  doc["light"]=50;
-  doc["color"]=30;
-  doc["tankData"]=notification;
-
-  //nodemcu-ra küldés
-  serializeJson(doc, nodemcu);
-
-  delay(2000);
 }
 
 void GetColors()  //Színérzékelő fügvény
