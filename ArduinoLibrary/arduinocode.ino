@@ -20,6 +20,7 @@ int minviz = 400; //vízszint ami alatt öntözünk
 int Red=0, Blue=0, Green=0, ORed=0, OBlue=0, OGreen=0;  //RGB values 
 bool O=false;
 bool netrequest = false;
+int wateringmode = 1;
 
 //Mért értékek a map függvényekhez
 const int szaraz = 810;
@@ -66,6 +67,8 @@ void setup() {
   ORed = Red;
   OGreen  = Green;
   OBlue = Blue;
+
+  dht.begin(115200);
   delay(1000);
   Serial.println("Program Started!");
 }
@@ -94,7 +97,53 @@ void loop() {
 	else {
 		kifogyott = false;
 	}	
- 
+
+  if(netrequest) wateringmode=2;
+  switch (wateringmode) {
+  case 1:
+    //nagyon alap öntöző kód
+	  if (moisture <85 and kifogyott == false){
+      O=true;
+      digitalWrite (relepin, LOW);
+      delay (1000);
+      digitalWrite (relepin, HIGH);
+	  }
+    break;
+  case 2:
+    //netrequest alapján öntözés
+	  if (!kifogyott){
+      digitalWrite (relepin, LOW);
+      delay (1000);
+      digitalWrite (relepin, HIGH);
+	  }
+    break;
+  case 3:
+    //nagyon alap öntöző kód
+	  if (moisture <50 and kifogyott == false){
+      O=true;
+      digitalWrite (relepin, LOW);
+      delay (1000);
+      digitalWrite (relepin, HIGH);
+	  }
+    break;
+  case 4:
+    //páratartalom alacsony
+	  if (moisture <55 and kifogyott == false and humidity<40){
+      O=true;
+      digitalWrite (relepin, LOW);
+      delay (1500);
+      digitalWrite (relepin, HIGH);
+	  }
+    break;
+  default:
+    if (moisture <85 and kifogyott == false){
+      O=true;
+      digitalWrite (relepin, LOW);
+      delay (1000);
+      digitalWrite (relepin, HIGH);
+	  }
+    break;
+}
 	//nagyon alap öntöző kód
 	if (moisture <85 and kifogyott == false){
 		O=true;
@@ -108,7 +157,6 @@ void loop() {
 		digitalWrite (relepin, LOW);
 		delay (1000);
 		digitalWrite (relepin, HIGH);
-		
 	}
 	if (coms.textToSend.isEmpty()) {
 
